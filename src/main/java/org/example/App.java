@@ -6,12 +6,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Hello world!
- */
+ * Главный класс приложения
+ * */
 public class App {
     public static void main(String[] args) {
-
-        FileChanger.clearFile();
+        FileChanger filechanger = new FileChanger("resources/file.json");
+        filechanger.clearOrCreateFile();
 
         ExecutorService service = Executors.newFixedThreadPool(10);
 
@@ -21,6 +21,4 @@ public class App {
         }
         service.shutdown();
     }
-
-
 }

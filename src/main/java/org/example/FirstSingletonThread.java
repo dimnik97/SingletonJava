@@ -1,6 +1,9 @@
 package org.example;
 
 
+/**
+ * Класс для запуска в потоке
+ */
 class FirstSingletonThread extends BaseClass {
 
     public String getText() {

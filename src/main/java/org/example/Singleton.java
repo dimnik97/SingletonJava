@@ -5,46 +5,54 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Класс, реализующий паттерн singleton
+ */
 public class Singleton {
 
     private static volatile Singleton instance;
 
+    /**
+     * @return возвращает instance экземпляра класса
+     */
     public static synchronized Singleton getInstance() {
-        Singleton localInstance = instance;
         if (instance == null) {
             synchronized (Singleton.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new Singleton();
+                if (instance == null) {
+                    instance = new Singleton();
                 }
             }
         }
-        return localInstance;
+        return instance;
     }
 
+    /**
+     * Генерирует json и записывает его в файл
+     *
+     * @param value текст, который нужно добавить к json узлу
+     * @param node узел
+     */
     public void writeValueToFile(String value, String node) {
 
         Gson gson = new Gson();
-        Map<String, Map<String, String>> map = FileChanger.readJsonFromFile();
 
-        Map<String, String> map_obj;
+        FileChanger fileChanger = new FileChanger("resources/file.json");
+
+        Map<String, Map<String, String>> map = fileChanger.readJsonFromFileAsMap();
+
+        Map<String, String> mapObj;
 
         if (map != null && map.containsKey(node)) {
-            map_obj = map.get(node);
-            map_obj.put(String.valueOf(map_obj.size() + 1), value);
+            mapObj = map.get(node);
+            mapObj.put(String.valueOf(mapObj.size() + 1), value);
         } else {
-            map_obj = new HashMap<>();
-            map_obj.put("1", value);
+            mapObj = new HashMap<>();
+            mapObj.put("1", value);
         }
+        map.put(node, mapObj);
 
-        map.put(node, map_obj);
+        byte[] bytes = gson.toJson(map).getBytes();
 
-        String str = gson.toJson(map);
-        byte[] bytes = str.getBytes();
-
-        FileChanger.writeToFile(bytes);
-
+        fileChanger.writeToFile(bytes);
     }
-
-
 }
