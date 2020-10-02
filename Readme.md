@@ -1,5 +1,6 @@
 # Запуск проекта
 Запустить файл /src/main/java/org/example/App.java
+
 Результат лежит в файле /resources/file.json
 
 
