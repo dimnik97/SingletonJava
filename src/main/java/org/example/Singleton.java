@@ -32,7 +32,7 @@ public class Singleton {
      * @param value текст, который нужно добавить к json узлу
      * @param node узел
      */
-    public void writeValueToFile(String value, String node) {
+    public synchronized void writeValueToFile(String value, String node) {
 
         Gson gson = new Gson();
 

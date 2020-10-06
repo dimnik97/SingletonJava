@@ -13,11 +13,11 @@ public class App {
         FileChanger filechanger = new FileChanger("resources/file.json");
         filechanger.clearOrCreateFile();
 
-        ExecutorService service = Executors.newFixedThreadPool(10);
+        ExecutorService service = Executors.newFixedThreadPool(20);
 
         for (int i = 0; i < 10; i++) {
-            service.submit(new SecondSingletonThread());
             service.submit(new FirstSingletonThread());
+            service.submit(new SecondSingletonThread());
         }
         service.shutdown();
     }
